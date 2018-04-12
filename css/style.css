@@ -12,3 +12,46 @@ th {
 	padding: 5px;
 	border-bottom: 1px solid #aaa;
 }
+
+.main-body {
+	padding: 10px;
+}
+
+.form-input {
+	position: relative;
+	width: 75%;
+	margin: 10px auto;
+	padding: 10px;
+}
+
+.index-body {
+	width: 60%;
+	position: relative;
+	margin: 10px auto;
+	font-size: 150%;
+}
+
+.tile {
+	position: relative;
+	width: 80%;
+	margin: 10px auto;
+	/* border: 1px solid red; */
+	background-color: #ed897899;
+	padding: 40px;
+	font-size: 150%;
+	text-align: center;
+	cursor: pointer;
+	transition: all 1s;
+}
+
+.tile:hover {
+	background-color: #ed8978ff;
+}
+
+.welcome-msg {
+	text-align: right;
+	font-weight: bold;
+	position: relative;
+	margin: 5px auto;
+	font-size: 150%;
+}
