@@ -6,7 +6,7 @@ if (isset($_POST['submit'])) {
 
 		$connection = new PDO($dsn, $username, $password, $options);
         	// fetch data code will go here
-		$sql = "SELECT * 
+		$sql = "SELECT *
 			FROM users
 			WHERE location = :location";
 		$location = $_POST['location'];
@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
 
 <?php include "templates/header.php"; ?>
 
-<?php 
+<?php
 	if (isset($_POST['submit'])) {
 	if ($result && $statement->rowCount() > 0) { ?>
 		<h2>Results</h2>
@@ -51,22 +51,32 @@ if (isset($_POST['submit'])) {
 				<td><?php echo escape($row["location"]); ?></td>
 				<td><?php echo escape($row["date"]); ?> </td>
 			</tr>
-		<?php } ?> 
+		<?php } ?>
 			</tbody>
 		</table>
 	<?php } else 	{ ?>
 			<blockquote>No results found for <?php echo escape($_POST['location']); ?>.</blockquote>
-<?php	} 
+<?php	}
 }?>
 
-<h2>Find user based on location</h2>
+<body>
+	<div class="container main-body">
+		<div class="jumbotron text-center" style="background-color: #337ab7 !important; color: #f7f7f7">
+			<h2> Find all Users at your Location </h2>
+		</div>
 
-<form method="post">
-	<label for="location">Location</label>
-	<input type="text" id="location" name="location">
-	<input type="submit" name="submit" value="View Results">
-</form>
-
-<a href="index.php">Back to home</a>
+		<form method="post">
+			<div class="form-input">
+				<label for="location">Location</label>
+				<input type="text" id="location" name="location" class="form-control">
+			</div>
+			<div class="form-input">
+				<input type="submit" name="submit" value="View Results" class="btn btn-success">
+			</div>
+		</form>
+		<div class="form-input">
+			<a href="index.php" type="button" class="btn btn-success">Back to home</a>
+		</div>
+</div>
 
 <?php include "templates/footer.php"; ?>
