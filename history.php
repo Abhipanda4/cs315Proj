@@ -8,7 +8,7 @@
       header("Location: users_login.php");
     }
   ?>
-  <?php $username = $_SESSION["username"]; ?>
+  <?php $user = $_SESSION["username"]; ?>
 <!--  <body> 
   	<div class="container main-body">
   		<div class="jumbotron text-center" style="background-color: #337ab7 !important; color: #f7f7f7">
@@ -33,68 +33,87 @@
                 <div class="jumbotron text-center" style="background-color: #337ab7 !important; color: #f7f7f7">
                         <h2> Check Your Transactions</h2>
                 </div>
-      <div class="welcome-msg"> Welcome, <?php echo $username; ?> </div>
-      <div class="index-body">
-        <div class="row">
-          <div class="col-lg-12">
-           <div class="tile"><input type="submit" name="overdue" value="Overdue Issues"></div>
-          </div>
-          <div class="col-lg-12">
-	  <div class="tile"><input type="submit" name="due" value="Due Issues"></div>
-	  </div>
-          <div class="col-lg-12">
-	  <div class="tile"><input type="submit" name="cleared" value="Cleared Issues"></div>
-          </div>
-        </div>
-      </div>
-        </div>
-        <?php include "templates/footer.php"; ?>
+      <div class="welcome-msg"> Welcome, <?php echo $user; ?> </div>
+      <form method="post">
+        <div class="form-input">
+           <label for="transaction">Choose type of transaction </label>
+           <select class="form-control" id="transaction" name="transaction">
+             <option>Overdue Issues</option>
+             <option>Due Issues</option>
+	     <option>Cleared Issues</option>
 
+           </select>
+        </div>
+                        <div class="form-input">
+                                <input type="submit" name="submit" value="Find Book" class="btn btn-success">
+                        </div>
+                </form>
       <?php
         require "common.php";
         require "config.php";
+	$user = 'vegeta';
         if (isset($_POST['submit'])) {
-          // Connect to server and select databse.
-          $connection = mysqli_connect($host, $username, $password);
-          $select_db = mysqli_select_db($connection, $dbname);
-          echo $sql;
-          $sql = "SELECT * FROM issues WHERE username='$username'";
-	  $result = mysqli_query($connection, $sql);
-	  echo $result;
-	}
-	else{
-		echo "wtf";
-	}
-?>
-<?php
-	        if (isset($_POST['due'])) {
-			        if ($result && $statement->rowCount() > 0) { ?>
-					                <h2>Results</h2>
+          $connection = new PDO($dsn, $username, $password, $options);
+//          $connection = mysqli_connect($host, $username, $password);
+//                               $select_db = mysqli_select_db($connection, $dbname);
+	   $now = 'NOW()';
+          if($_POST['transaction'] == 'Cleared Issues'){
+ 	        $sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user AND return_date != 0000-00-00";
+		$statement = $connection->prepare($sql);
+          	$statement->bindParam(':user', $user, PDO::PARAM_STR);
+          	$statement->execute();
+          	$result = $statement->fetchAll();
+}
+        
+	else if($_POST['transaction'] == 'Overdue Issues'){
+                $sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user AND return_date = 0000-00-00 AND due_date <= 'NOW()'";
+                $statement = $connection->prepare($sql);
+                $statement->bindParam(':user', $user, PDO::PARAM_STR);
+                $statement->execute();
+                $result = $statement->fetchAll();
+}
+	else if($_POST['transaction'] == 'Due Issues'){
+                $sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user AND return_date = 0000-00-00 AND  due_date > 'NOW()'";
+                $statement = $connection->prepare($sql);
+                $statement->bindParam(':user', $user, PDO::PARAM_STR);
+                $statement->execute();
+                $result = $statement->fetchAll();
+}
+        
 
+        }
+
+      ?>
+
+<?php         
+	        if (isset($_POST['submit'])) {
+			        if ($result) { ?>
+					                <h2>Results</h2>
+						
                 <table>
                         <thead>
                                 <tr>
-                                        <th>Name</th>
-                                        <th>userame</th>
-                                        <th>Email Address</th>
-                                        <th>Location</th>
-                                        <th>Date</th>
+                                        <th>Book</th>
+                                        <th>Branch </th>
+                                        <th>Issue Date</th>
+                                        <th>Due Date</th>
+                                        <th>Return Date</th>
                                 </tr>
                         </thead>
                         <tbody>
 <?php           foreach ($result as $row) { ?>
                         <tr>
-                                <td><?php echo escape($row["name"]); ?></td>
-                                <td><?php echo escape($row["username"]); ?></td>
-                                <td><?php echo escape($row["email"]); ?></td>
-                                <td><?php echo escape($row["location"]); ?></td>
-                                <td><?php echo escape($row["date"]); ?> </td>
+                                <td><?php echo escape($row["book_name"]); ?> </td>
+                                <td><?php echo escape($row["address"]); ?> </td>
+                                <td><?php echo escape($row["issue_date"]); ?> </td>
+                                <td><?php echo escape($row["due_date"]); ?> </td>
+                                <td><?php echo escape($row["return_date"]); ?> </td>
                         </tr>
                 <?php } ?>
                         </tbody>
                 </table>
         <?php } else    { ?>
-                        <blockquote>No results found for <?php echo escape($_POST['location']); ?>.</blockquote>
+                        <blockquote>No results found for <?php echo escape($_POST['transaction']); ?>.</blockquote>
 <?php   }
 }?>
 
