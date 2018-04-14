@@ -7,8 +7,8 @@
 	</div>
 	<form method="post">
 		<div class="form-input">
-			<label for="name">Name</label>
-			<input type="text" name="name" id="name" class="form-control">
+			<label for="username">Name</label>
+			<input type="text" name="username" id="username" class="form-control">
 		</div>
 		<div class="form-input">
 			<label for="password">Password</label>
@@ -28,10 +28,10 @@
     $connection = mysqli_connect($host, $username, $password);
     $select_db = mysqli_select_db($connection, $dbname);
 
-    $name = $_POST['name'];
+    $username = $_POST['username'];
     $password  = hash('sha256', escape($_POST["password"]));
     $branch = $_POST['branch_ID'];
-    $sql = "INSERT INTO staff (name, password, branch_ID) values ('$name', '$password', '$branch');";
+    $sql = "INSERT INTO staff (username, password, branch_ID) values ('$username', '$password', '$branch');";
     $result = mysqli_query($connection, $sql);
 
     if ($result == true) {
@@ -48,7 +48,7 @@
 
   <p></p>
 	<div class="form-input">
-		<a href="index.php" type="button" class="btn btn-success">Back to home</a>
+		<a href="staff_dashboard.php" type="button" class="btn btn-success">Back to home</a>
 	</div>
 </div>
 <?php include "templates/footer.php"; ?>

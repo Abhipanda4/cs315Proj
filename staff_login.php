@@ -14,8 +14,8 @@
 
 		<form method="post">
 			<div class="form-input">
-				<label for="name">Staff Name</label>
-				<input type="text" id="name" name="name" class="form-control">
+				<label for="username">Staff Name</label>
+				<input type="text" id="username" name="username" class="form-control">
 			</div>
       <div class="form-input">
 				<label for="password">Password</label>
@@ -33,10 +33,10 @@
 				$connection = mysqli_connect($host, $username, $password);
 				$select_db = mysqli_select_db($connection, $dbname);
 
-        $username = escape($_POST['name']);
+        $username = escape($_POST['username']);
         $password = hash('sha256',escape($_POST["password"]));
 
-				$sql = "SELECT * FROM staff WHERE name='$username'AND password='$password'";
+				$sql = "SELECT * FROM staff WHERE username='$username'AND password='$password'";
 				$result = mysqli_query($connection, $sql);
         $num_of_rows = mysqli_num_rows($result);
         if ($num_of_rows == 0) {
