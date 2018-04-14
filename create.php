@@ -5,8 +5,6 @@
 
   try {
     $connection = new PDO($dsn, $username, $password, $options);
-    // insert new user code will go here
-
     $new_user = array(
       "name" => $_POST['name'],
       "username"  => $_POST['username'],

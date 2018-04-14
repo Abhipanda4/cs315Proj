@@ -5,7 +5,6 @@ if (isset($_POST['submit'])) {
 		require "common.php";
 
 		$connection = new PDO($dsn, $username, $password, $options);
-        	// fetch data code will go here
 		$sql = "SELECT *
 			FROM book_issues;";
 		$location = $_POST['location'];

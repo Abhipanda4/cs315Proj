@@ -9,21 +9,21 @@
     }
   ?>
 
-  <?php $username = $_SESSION['username']; ?>
+  <?php $username = $_SESSION['username'] ?>
   <body>
   	<div class="container main-body">
   		<div class="jumbotron text-center" style="background-color: #337ab7 !important; color: #f7f7f7">
-  			<h2> Issue/Return a New Book </h2>
+  			<h2> Add or Remove a Book </h2>
   		</div>
       <div class="welcome-msg"> Welcome, <?php echo $username; ?> </div>
       <form method="post">
   			<div class="form-input">
-  				<label for="book_id">Book ID</label>
+  				<label for="book_id">Book ID &nbsp;<span style="color: red;">*</span></label>
   				<input type="text" id="book_id" name="book_id" class="form-control">
   			</div>
         <div class="form-input">
-  				<label for="username"> Username </label>
-  				<input type="text" id="username" name="username" class="form-control">
+  				<label for="book_name">Book Name</label>
+  				<input type="text" id="book_name" name="book_name" class="form-control">
   			</div>
         <div class="form-input">
   				<label for="book_author">Book Author</label>
