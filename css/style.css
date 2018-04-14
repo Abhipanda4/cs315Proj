@@ -38,7 +38,7 @@ th {
 	/* border: 1px solid red; */
 	background-color: #ed897899;
 	padding: 40px;
-	font-size: 150%;
+	font-size: 110%;
 	text-align: center;
 	cursor: pointer;
 	transition: all 1s;
@@ -49,9 +49,10 @@ th {
 }
 
 .welcome-msg {
-	text-align: right;
+	text-align: center;
 	font-weight: bold;
 	position: relative;
-	margin: 5px auto;
+	margin: 10px auto;
+	margin-bottom: 30px;
 	font-size: 150%;
 }
