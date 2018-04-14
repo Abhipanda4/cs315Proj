@@ -16,17 +16,17 @@
 		<div class="index-body">
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="tile"> <a href="create.php" style="text-decoration: none; color: black;"> Register a New User </a> </div>
+					<div class="tile"> <a href="create.php" style="text-decoration: none; color: black;"> Sign Up </a> </div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="tile"> <a href="read.php" style="text-decoration: none; color: black;"> Search Users </a> </div>
+					<div class="tile"> <a href="staff_login.php" style="text-decoration: none; color: black;"> Staff Login </a> </div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="tile"> <a href="login.php" style="text-decoration: none; color: black;"> User Login </a> </div>
+					<div class="tile"> <a href="users_login.php" style="text-decoration: none; color: black;"> User Login </a> </div>
 				</div>
 			</div>
 		</div>

@@ -7,8 +7,7 @@ if (isset($_POST['submit'])) {
 		$connection = new PDO($dsn, $username, $password, $options);
         	// fetch data code will go here
 		$sql = "SELECT *
-			FROM users
-			WHERE location = :location";
+			FROM book_issues;";
 		$location = $_POST['location'];
 		$statement = $connection->prepare($sql);
 		$statement->bindParam(':location', $location, PDO::PARAM_STR);

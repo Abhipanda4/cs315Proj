@@ -3,31 +3,29 @@
 
   <?php include "templates/header.php"; ?>
   <?php
-    // if (!isset($_SESSION)) {
-    //   header("Location: login.php");
-    // }
+    session_start();
+    if (!isset($_SESSION)) {
+      header("Location: users_login.php");
+    }
   ?>
-  <?php $username="chutiya"; ?>
+  <?php $username = $_SESSION["username"]; ?>
   <body>
   	<div class="container main-body">
   		<div class="jumbotron text-center" style="background-color: #337ab7 !important; color: #f7f7f7">
   			<h2> User Dashboard </h2>
   		</div>
       <div class="welcome-msg"> Welcome, <?php echo $username; ?> </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="tile"> <a href="new_issue.php" style="text-decoration: none; color: black;"> Borrow New Book </a> </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="tile"> <a href="history.php" style="text-decoration: none; color: black;"> Check History </a> </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="tile"> <a href="catalogue.php" style="text-decoration: none; color: black;"> Check Catalogue </a> </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="tile"> <a href="complaint.php" style="text-decoration: none; color: black;"> Issue Complaint </a> </div>
+      <div class="index-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="tile"> <a href="history.php" style="text-decoration: none; color: black;"> Check History </a> </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="tile"> <a href="catalogue.php" style="text-decoration: none; color: black;"> Check Catalogue </a> </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="tile"> <a href="edit_profile.php" style="text-decoration: none; color: black;"> Edit Profile </a> </div>
+          </div>
         </div>
       </div>
   	</div>
