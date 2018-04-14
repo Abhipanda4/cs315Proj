@@ -32,6 +32,7 @@
     $password  = hash('sha256', escape($_POST["password"]));
     $branch = $_POST['branch_ID'];
     $sql = "INSERT INTO staff (name, password, branch_ID) values ('$name', '$password', '$branch');";
+    echo $sql;
     $result = mysqli_query($connection, $sql);
 
     if ($result == true) {

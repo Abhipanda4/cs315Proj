@@ -38,9 +38,9 @@
 				$select_db = mysqli_select_db($connection, $dbname);
 
         $username = escape($_POST['username']);
-        $password = hash('sha256',escape($_POST["password"]));
+	$password = hash('sha256',escape($_POST["password"]));
 
-				$sql = "SELECT * FROM users WHERE name='$username' AND password='$password'";
+				$sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
 				$result = mysqli_query($connection, $sql);
         $num_of_rows = mysqli_num_rows($result);
         if ($num_of_rows == 0) {
