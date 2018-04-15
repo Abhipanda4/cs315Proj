@@ -51,14 +51,13 @@
       <?php
         require "common.php";
         require "config.php";
-	$user = 'vegeta';
         if (isset($_POST['submit'])) {
           $connection = new PDO($dsn, $username, $password, $options);
 //          $connection = mysqli_connect($host, $username, $password);
 //                               $select_db = mysqli_select_db($connection, $dbname);
 	   $now = 'NOW()';
           if($_POST['transaction'] == 'Cleared Issues'){
- 	        $sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user AND return_date != 0000-00-00";
+		$sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user AND return_date IS NOT NULL";
 		$statement = $connection->prepare($sql);
           	$statement->bindParam(':user', $user, PDO::PARAM_STR);
           	$statement->execute();
@@ -66,14 +65,14 @@
 }
 
 	else if($_POST['transaction'] == 'Overdue Issues'){
-                $sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user AND return_date = 0000-00-00 AND due_date <= 'NOW()'";
+                $sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user AND return_date IS NULL AND due_date <= 'NOW()'";
                 $statement = $connection->prepare($sql);
                 $statement->bindParam(':user', $user, PDO::PARAM_STR);
                 $statement->execute();
                 $result = $statement->fetchAll();
 }
 	else if($_POST['transaction'] == 'Due Issues'){
-                $sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user AND return_date = 0000-00-00 AND  due_date > 'NOW()'";
+                $sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user  AND return_date IS NULL AND  due_date > 'NOW()'";
                 $statement = $connection->prepare($sql);
                 $statement->bindParam(':user', $user, PDO::PARAM_STR);
                 $statement->execute();
@@ -118,7 +117,8 @@
 }?>
 
   		<div class="form-input">
-  			<a href="index.php" type="button" class="btn btn-success">Back to home</a>
-  		</div>
+  			<a href="dashboard.php" type="button" class="btn btn-success">Back to dashboard</a>
+		</div>
+
   </body>
 </html>

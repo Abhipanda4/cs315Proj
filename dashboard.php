@@ -28,7 +28,8 @@
           </div>
         </div>
       </div>
-  	</div>
+	</div>
+	    <?php include "logout.php"; ?>
   	<?php include "templates/footer.php"; ?>
   </body>
 </html>
