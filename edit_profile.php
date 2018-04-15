@@ -3,63 +3,26 @@
 
   <?php include "templates/header.php"; ?>
   <?php
-    // if (!isset($_SESSION)) {
-    //   header("Location: login.php");
-    // }
-  ?>
-  <?php if (isset($_POST['submit'])) {
-  	require "common.php";
-    require "config.php";
-
-    try {
-      $connection = new PDO($dsn, $username, $password, $options);
-      // insert new user code will go here
-
-      $new_user = array(
-        "name" => $_POST['name'],
-        "username"  => $_POST['username'],
-        "email"     => $_POST['email'],
-        "password"  => hash('sha256', escape($_POST["password"])),
-        "location"  => $_POST['location']
-      );
-
-      $sql = sprintf(
-              "INSERT INTO %s (%s) values (%s)",
-              "users",
-              implode(", ", array_keys($new_user)),
-              ":" . implode(", :", array_keys($new_user))
-      );
-
-      $statement = $connection->prepare($sql);
-      $statement->execute($new_user);
-    } catch(PDOException $error) {
-      echo $error->getMesspassword();
+    session_start();
+    if (!isset($_SESSION)) {
+      header("Location: users_login.php");
     }
-  } ?>
-
-
-  <?php if (isset($_POST['submit']) && $statement) { ?>
-  	<blockquote><?php echo $_POST['name']; ?> successfully added.</blockquote>
-  <?php } ?>
-
-  <?php $username = "chutiya"; ?>
-  <div class="container main-body">
-  	<div class="jumbotron text-center" style="background-color: #337ab7 !important; color: #f7f7f7">
-  		<h2> Edit Your Profile </h2>
-  	</div>
-    <div class="welcome-msg"> Welcome, <?php echo $username; ?> </div>
-  	<form method="post">
+  ?>
+  <?php $user = $_SESSION["username"]; ?>
+     <body>
+        <div class="container main-body">
+                <div class="jumbotron text-center" style="background-color: #337ab7 !important; color: #f7f7f7">
+                        <h2> Check Your Transactions</h2>
+                </div>
+      <div class="welcome-msg"> Welcome, <?php echo $user; ?> </div>
+      <form method="post">
   		<div class="form-input">
   			<label for="name">Name</label>
   			<input type="text" name="name" id="name" class="form-control">
   		</div>
   		<div class="form-input">
-  			<label for="username">User Name</label>
-  			<input type="text" name="username" id="username" class="form-control">
-  		</div>
-  		<div class="form-input">
-  			<label for="password">Password</label>
-  			<input type="text" name="password" id="password" class="form-control">
+  			<label for="password">New Password (Same as old if you do not want to change!)</label>
+  			<input type="password" name="password" id="password" class="form-control">
   		</div>
   		<div class="form-input">
   			<label for="email">Email Address</label>
@@ -72,9 +35,46 @@
   		<div class="form-input">
   			<input type="submit" name="submit" value="Submit" class="btn btn-success">
   		</div>
-  	</form>
-  	<div class="form-input">
-  		<a href="index.php" type="button" class="btn btn-success">Back to home</a>
-  	</div>
-  </div>
-  <?php include "templates/footer.php"; ?>
+	</form>
+	<?php
+        require "common.php";
+        require "config.php";
+        if (isset($_POST['submit'])) {
+          $connection = new PDO($dsn, $username, $password, $options);
+//          $connection = mysqli_connect($host, $username, $password);
+//                               $select_db = mysqli_select_db($connection, $dbname);
+		$new_password = hash('sha256',escape($_POST["password"]));
+		$email  =  $_POST["email"];
+		$location = $_POST["location"];
+		$name = $_POST["name"];
+                $sql = "UPDATE users
+			SET name = :name, username = :user, email = :email, password = :new_password, location = :location
+			WHERE username = :user";
+                $statement = $connection->prepare($sql);
+                $statement->bindParam(':user', $user, PDO::PARAM_STR);
+		$statement->bindParam(':name', $name, PDO::PARAM_STR);
+                $statement->bindParam(':email', $email, PDO::PARAM_STR);
+                $statement->bindParam(':new_password', $new_password, PDO::PARAM_STR);
+                $statement->bindParam(':location', $location, PDO::PARAM_STR);
+                $statement->execute();
+	  if ($statement->rowCount() ? true : false) {
+     		 echo '<div class="alert alert-success col-md-10 col-md-offset-1">',
+              		'<strong>Profile successfully updated.</strong>',
+            		'</div>';
+    			} else {
+      		echo '<div class="alert alert-danger col-md-10 col-md-offset-1">',
+        	        '<strong>That did not work! Did you write your old password correctly ??</strong></a>',
+              		'</div>';
+    			}
+
+        }
+
+      ?>
+
+
+  		<div class="form-input">
+  			<a href="dashboard.php" type="button" class="btn btn-success">Back to dashboard</a>
+		</div>
+
+  </body>
+</html>
