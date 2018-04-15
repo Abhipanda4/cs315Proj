@@ -4,8 +4,8 @@
   <?php include "templates/header.php"; ?>
   <?php
     session_start();
-    if (!isset($_SESSION)) {
-      header("Location: login.php");
+    if (!isset($_SESSION['branch_ID'])) {
+      header("Location: staff_login.php");
     }
   ?>
   <?php $username = $_SESSION['username']; ?>
@@ -17,10 +17,10 @@
       <div class="welcome-msg"> Welcome, <?php echo $username; ?> </div>
       <div class="row">
         <div class="col-sm-6">
-          <div class="tile"> <a href="books.php" style="text-decoration: none; color: black;"> Add/Remove Books </a> </div>
+          <div class="tile"> <a href="books.php" style="text-decoration: none; color: black;"> Add New Books </a> </div>
         </div>
         <div class="col-sm-6">
-          <div class="tile"> <a href="new_issue.php" style="text-decoration: none; color: black;"> Manage Book Issues </a> </div>
+          <div class="tile"> <a href="issue_or_borrow.php" style="text-decoration: none; color: black;"> Manage Book Issues </a> </div>
         </div>
       </div>
       <div class="row">
@@ -32,6 +32,7 @@
         </div>
       </div>
   	</div>
+    <?php include "logout.php"; ?>
   	<?php include "templates/footer.php"; ?>
   </body>
 </html>

@@ -1,5 +1,10 @@
 <?php include "templates/header.php"; ?>
-
+<?php
+	session_start();
+	if (!isset($_SESSION['branch_ID'])) {
+		header("Location: staff_login.php");
+	}
+?>
 
 <div class="container main-body">
 	<div class="jumbotron text-center" style="background-color: #337ab7 !important; color: #f7f7f7">

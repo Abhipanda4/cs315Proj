@@ -9,7 +9,7 @@
     }
   ?>
   <?php $username = $_SESSION["username"]; ?>
-<!--  <body> 
+<!--  <body>
   	<div class="container main-body">
   		<div class="jumbotron text-center" style="background-color: #337ab7 !important; color: #f7f7f7">
   			<h2> Check Your Transactions </h2>
@@ -35,6 +35,7 @@
                 </div>
       <div class="welcome-msg"> Welcome, <?php echo $username; ?> </div>
       <div class="index-body">
+      <form method="post">
         <div class="row">
           <div class="col-lg-12">
            <div class="tile"><input type="submit" name="overdue" value="Overdue Issues"></div>
@@ -46,6 +47,7 @@
 	  <div class="tile"><input type="submit" name="cleared" value="Cleared Issues"></div>
           </div>
         </div>
+      </form>
       </div>
         </div>
         <?php include "templates/footer.php"; ?>
@@ -53,7 +55,7 @@
       <?php
         require "common.php";
         require "config.php";
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['due'])) {
           // Connect to server and select databse.
           $connection = mysqli_connect($host, $username, $password);
           $select_db = mysqli_select_db($connection, $dbname);

@@ -1,8 +1,9 @@
 <?php include "templates/header.php"; ?>
 
 <?php
-	if (isset($_SESSION)) {
-	  header("Location: dashboard.php");
+	session_start();
+	if (isset($_SESSION['branch_ID'])){
+	  header("Location: staff_dashboard.php");
 	}
 ?>
 
