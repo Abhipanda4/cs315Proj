@@ -46,6 +46,7 @@
     							'<strong>Wrong Username or Password!</strong></a>',
   							'</div>';
         } else {
+					session_destroy();
           session_start();
 					$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
           $_SESSION['username'] = $username;

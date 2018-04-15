@@ -1,36 +1,7 @@
 <?php include "templates/header.php"; ?>
-<?php if (isset($_POST['submit'])) {
-	require "common.php";
-  require "config.php";
-
-  try {
-    $connection = new PDO($dsn, $username, $password, $options);
-    $new_user = array(
-      "name" => $_POST['name'],
-      "username"  => $_POST['username'],
-      "email"     => $_POST['email'],
-      "password"  => hash('sha256', escape($_POST["password"])),
-      "location"  => $_POST['location']
-    );
-
-    $sql = sprintf(
-            "INSERT INTO %s (%s) values (%s)",
-            "users",
-            implode(", ", array_keys($new_user)),
-            ":" . implode(", :", array_keys($new_user))
-    );
-
-    $statement = $connection->prepare($sql);
-    $statement->execute($new_user);
-  } catch(PDOException $error) {
-    echo $error->getMesspassword();
-  }
-} ?>
 
 
-<?php if (isset($_POST['submit']) && $statement) { ?>
-	<blockquote><?php echo $_POST['name']; ?> successfully added.</blockquote>
-<?php } ?>
+
 
 <div class="container main-body">
 	<div class="jumbotron text-center" style="background-color: #337ab7 !important; color: #f7f7f7">
@@ -60,6 +31,41 @@
 		<div class="form-input">
 			<input type="submit" name="submit" value="Submit" class="btn btn-success">
 		</div>
+		<div class="form-input">
+		<?php if (isset($_POST['submit'])) {
+			require "common.php";
+		  require "config.php";
+
+		  try {
+		    $connection = new PDO($dsn, $username, $password, $options);
+		    $new_user = array(
+		      "name" => $_POST['name'],
+		      "username"  => $_POST['username'],
+		      "email"     => $_POST['email'],
+		      "password"  => hash('sha256', escape($_POST["password"])),
+		      "location"  => $_POST['location']
+		    );
+
+		    $sql = sprintf(
+		            "INSERT INTO %s (%s) values (%s)",
+		            "users",
+		            implode(", ", array_keys($new_user)),
+		            ":" . implode(", :", array_keys($new_user))
+		    );
+
+		    $statement = $connection->prepare($sql);
+		    $statement->execute($new_user);
+				echo '<div class="alert alert-success">',
+								'<strong>'.$_POST['username']."</strong> successfully added",
+							'</div>';
+		  } catch(PDOException $error) {
+				echo '<div class="alert alert-danger">',
+								'<strong>Something went wrong!</strong> Try a different user name.',
+							'</div>';
+		  }
+		} ?>
+	</div>
+
 	</form>
 	<div class="form-input">
 		<a href="index.php" type="button" class="btn btn-success">Back to home</a>

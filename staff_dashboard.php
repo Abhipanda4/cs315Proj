@@ -25,7 +25,7 @@
       </div>
       <div class="row">
         <div class="col-sm-6">
-          <div class="tile"> <a href="remove_users.php" style="text-decoration: none; color: black;"> Remove Users </a> </div>
+          <div class="tile"> <a href="staff_list.php" style="text-decoration: none; color: black;"> List all Staff </a> </div>
         </div>
         <div class="col-sm-6">
           <div class="tile"> <a href="add_staff.php" style="text-decoration: none; color: black;"> Add New Staff </a> </div>

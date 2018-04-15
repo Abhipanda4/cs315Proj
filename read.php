@@ -22,6 +22,12 @@ if (isset($_POST['submit'])) {
 
 
 <?php include "templates/header.php"; ?>
+<?php
+	session_start();
+	if (!isset($_SESSION['random'])) {
+		header("Location: users_login.php");
+	}
+?>
 
 <?php
 	if (isset($_POST['submit'])) {

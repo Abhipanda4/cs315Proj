@@ -3,10 +3,10 @@
 
   <?php include "templates/header.php"; ?>
   <?php
-    session_start();
-    if (!isset($_SESSION)) {
-      header("Location: users_login.php");
-    }
+  session_start();
+  if (!isset($_SESSION['random'])) {
+    header("Location: users_login.php");
+  }
   ?>
   <?php $user = $_SESSION["username"]; ?>
      <body>

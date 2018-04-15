@@ -7,10 +7,10 @@ table {
 	border-spacing: 0;
 }
 
-td,
-th {
-	padding: 5px;
-	border-bottom: 1px solid #aaa;
+td, th {
+	padding: 15px;
+	margin: 10px;
+	/* border-bottom: 1px solid #aaa; */
 }
 
 .main-body {

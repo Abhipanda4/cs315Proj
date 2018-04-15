@@ -1,8 +1,9 @@
 <?php include "templates/header.php"; ?>
 
 <?php
-	if (isset($_SESSION)) {
-	  header("Location: dashboard.php");
+	session_start();
+	if (isset($_SESSION['random'])) {
+		header("Location: dashboard.php");
 	}
 ?>
 
@@ -49,8 +50,10 @@
     							'<strong>Wrong Username or Password!</strong></a>',
   							'</div>';
         } else {
+					session_destroy();
           session_start();
           $_SESSION['username'] = $username;
+					$_SESSION['random'] = "random";
           header("Location: dashboard.php");
         }
       }

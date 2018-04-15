@@ -4,7 +4,7 @@
   <?php include "templates/header.php"; ?>
   <?php
     session_start();
-    if (!isset($_SESSION)) {
+    if (!isset($_SESSION['random'])) {
       header("Location: users_login.php");
     }
   ?>

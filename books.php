@@ -86,7 +86,7 @@
         </div>
   		</form>
   		<div class="form-input">
-  			<a href="index.php" type="button" class="btn btn-success">Back to home</a>
+  			<a href="staff_dashboard.php" type="button" class="btn btn-success">Back to Dashboard</a>
   		</div>
   </body>
 </html>
