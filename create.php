@@ -18,7 +18,7 @@
 		</div>
 		<div class="form-input">
 			<label for="password">Password</label>
-			<input type="text" name="password" id="password" class="form-control">
+			<input type="password" name="password" id="password" class="form-control">
 		</div>
 		<div class="form-input">
 			<label for="email">Email Address</label>
@@ -35,34 +35,40 @@
 		<?php if (isset($_POST['submit'])) {
 			require "common.php";
 		  require "config.php";
-
-		  try {
-		    $connection = new PDO($dsn, $username, $password, $options);
-		    $new_user = array(
-		      "name" => $_POST['name'],
-		      "username"  => $_POST['username'],
-		      "email"     => $_POST['email'],
-		      "password"  => hash('sha256', escape($_POST["password"])),
-		      "location"  => $_POST['location']
-		    );
-
-		    $sql = sprintf(
-		            "INSERT INTO %s (%s) values (%s)",
-		            "users",
-		            implode(", ", array_keys($new_user)),
-		            ":" . implode(", :", array_keys($new_user))
-		    );
-
-		    $statement = $connection->prepare($sql);
-		    $statement->execute($new_user);
-				echo '<div class="alert alert-success">',
-								'<strong>'.$_POST['username']."</strong> successfully added",
-							'</div>';
-		  } catch(PDOException $error) {
+			if ($_POST['username'] == "" or $_POST['password'] == "") {
 				echo '<div class="alert alert-danger">',
-								'<strong>Something went wrong!</strong> Try a different user name.',
+								'<strong>Username or password cannot be empty</strong>',
 							'</div>';
-		  }
+			} else {
+			  try {
+
+			    $connection = new PDO($dsn, $username, $password, $options);
+			    $new_user = array(
+			      "name" => $_POST['name'],
+			      "username"  => $_POST['username'],
+			      "email"     => $_POST['email'],
+			      "password"  => hash('sha256', escape($_POST["password"])),
+			      "location"  => $_POST['location']
+			    );
+
+			    $sql = sprintf(
+			            "INSERT INTO %s (%s) values (%s)",
+			            "users",
+			            implode(", ", array_keys($new_user)),
+			            ":" . implode(", :", array_keys($new_user))
+			    );
+
+			    $statement = $connection->prepare($sql);
+			    $statement->execute($new_user);
+					echo '<div class="alert alert-success">',
+									'<strong>'.$_POST['username']."</strong> successfully added",
+								'</div>';
+			  } catch(PDOException $error) {
+					echo '<div class="alert alert-danger">',
+									'<strong>Something went wrong!</strong> Try a different user name.',
+								'</div>';
+			  }
+			}
 		} ?>
 	</div>
 

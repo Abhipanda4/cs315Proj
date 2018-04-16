@@ -59,14 +59,14 @@
       }
 
       	else if($_POST['transaction'] == 'Overdue Issues'){
-                      $sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user AND return_date IS NULL AND due_date <= 'NOW()'";
+                      $sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user AND return_date IS NULL AND due_date <= NOW()";
                       $statement = $connection->prepare($sql);
                       $statement->bindParam(':user', $user, PDO::PARAM_STR);
                       $statement->execute();
                       $result = $statement->fetchAll();
       }
       	else if($_POST['transaction'] == 'Due Issues'){
-                      $sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user  AND return_date IS NULL AND  due_date > 'NOW()'";
+                      $sql = "SELECT * FROM book_issues NATURAL JOIN books NATURAL JOIN branches WHERE username = :user  AND return_date IS NULL AND  due_date > NOW()";
                       $statement = $connection->prepare($sql);
                       $statement->bindParam(':user', $user, PDO::PARAM_STR);
                       $statement->execute();

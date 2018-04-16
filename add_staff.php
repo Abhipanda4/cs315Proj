@@ -17,7 +17,7 @@
 		</div>
 		<div class="form-input">
 			<label for="password">Password</label>
-			<input type="text" name="password" id="password" class="form-control">
+			<input type="password" name="password" id="password" class="form-control">
 		</div>
     <div class="form-input">
 			<label for="branch_ID">Branch ID</label>
@@ -32,23 +32,28 @@
     require "config.php";
     $connection = mysqli_connect($host, $username, $password);
     $select_db = mysqli_select_db($connection, $dbname);
+		if ($_POST['username'] == "" or $_POST['password'] == "" or $_POST['branch_ID'] == "") {
+			echo '<div class="alert alert-danger">',
+							'<strong>Username or password or branch ID cannot be empty</strong>',
+						'</div>';
+		} else {
+	    $username = $_POST['username'];
+	    $password  = hash('sha256', escape($_POST["password"]));
+	    $branch = $_POST['branch_ID'];
+	    $sql = "INSERT INTO staff (username, password, branch_ID) values ('$username', '$password', '$branch');";
+	    $result = mysqli_query($connection, $sql);
 
-    $username = $_POST['username'];
-    $password  = hash('sha256', escape($_POST["password"]));
-    $branch = $_POST['branch_ID'];
-    $sql = "INSERT INTO staff (username, password, branch_ID) values ('$username', '$password', '$branch');";
-    $result = mysqli_query($connection, $sql);
-
-    if ($result == true) {
-      echo '<div class="alert alert-success col-md-10 col-md-offset-1">',
-              '<strong>Successfully added.</strong>',
-            '</div>';
-    } else {
-      echo '<div class="alert alert-danger col-md-10 col-md-offset-1">',
-                '<strong>Try a different username!!</strong></a>',
-              '</div>';
-    }
-  } ?>
+	    if ($result == true) {
+	      echo '<div class="alert alert-success col-md-10 col-md-offset-1">',
+	              '<strong>Successfully added.</strong>',
+	            '</div>';
+	    } else {
+	      echo '<div class="alert alert-danger col-md-10 col-md-offset-1">',
+	                '<strong>That did not work!! Try again.</strong></a>',
+	              '</div>';
+	    }
+		}
+	 } ?>
   </form>
 
   <p></p>
